@@ -2,62 +2,78 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import './App.css';
 
+const NAV_ITEMS = ['Home', 'About', 'Work', 'Experience', 'Contact'];
+
 const App = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 40);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const fadeInUp = {
-    hidden: { opacity: 0, y: 40 },
+    hidden: { opacity: 0, y: 28 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
   };
 
   const staggerContainer = {
     hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
+    visible: { opacity: 1, transition: { staggerChildren: 0.12 } }
   };
 
   return (
     <>
+      {/* ===== Header ===== */}
       <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
         <div className="container nav-container">
-          <a href="#" className="logo">Portfolio</a>
+          <a href="#home" className="logo">
+            <span className="logo-mark">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2l1.8 5.6L19 9l-5.2 1.4L12 16l-1.8-5.6L5 9l5.2-1.4L12 2z" fill="var(--orange)" stroke="var(--ink)" strokeWidth="1.2" strokeLinejoin="round" />
+                <circle cx="19" cy="16" r="1.6" fill="var(--yellow)" stroke="var(--ink)" strokeWidth="1" />
+                <circle cx="4.5" cy="15" r="1.1" fill="var(--yellow)" stroke="var(--ink)" strokeWidth="1" />
+              </svg>
+            </span>
+            <span className="logo-text">
+              THEJESH<br />N S
+            </span>
+          </a>
 
           <nav className="desktop-nav">
-            {['Home', 'About', 'Projects', 'Experience', 'Contact'].map((item) => (
-              <a key={item} href={`#${item.toLowerCase()}`}>
-                {item}
-              </a>
+            {NAV_ITEMS.map((item, i) => (
+              <React.Fragment key={item}>
+                <a href={`#${item.toLowerCase()}`} className={i === 0 ? 'active' : ''}>
+                  {item}
+                </a>
+                {i < NAV_ITEMS.length - 1 && <span className="nav-dot">·</span>}
+              </React.Fragment>
             ))}
           </nav>
+
+          <a href="mailto:thejesh1612004@gmail.com" className="nav-contact paper-stack">
+            Contact
+          </a>
 
           <button
             className="mobile-menu-btn"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle menu"
           >
-            ☰
+            <span /><span />
           </button>
         </div>
 
         {isMobileMenuOpen && (
           <motion.nav
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
             className="mobile-nav"
           >
-            {['Home', 'About', 'Projects', 'Experience', 'Contact'].map((item) => (
-              <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
+            {NAV_ITEMS.map((item) => (
+              <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setIsMobileMenuOpen(false)}>
                 {item}
               </a>
             ))}
@@ -65,60 +81,60 @@ const App = () => {
         )}
       </header>
 
+      {/* ===== Hero ===== */}
       <section id="home" className="hero">
-        <div className="video-background">
-          <video autoPlay loop muted playsInline>
-            <source src="/v1.mp4" type="video/mp4" />
-          </video>
-        </div>
+        <div className="container hero-grid">
+          <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="hero-text">
+            <motion.span variants={fadeInUp} className="hero-sparkle">✦</motion.span>
 
-        <div className="hero-image-absolute">
-          <img src="/tj3.png" alt="Background Portrait" />
-        </div>
-
-        <div className="container hero-content">
-          <motion.div
-            className="hero-text"
-            initial="hidden"
-            animate="visible"
-            variants={staggerContainer}
-          >
-            <motion.span variants={fadeInUp} className="hero-thejesh">
-              Hello, I'm
-            </motion.span>
-            <motion.span variants={fadeInUp} className="hero-greeting">
-              Thejesh N S
-            </motion.span>
             <motion.h1 variants={fadeInUp} className="hero-title">
-              <span>Game Creator & </span>
-              <span>Full Stack Developer </span>
+              <span className="line">CRAFTING</span>
+              <span className="line">WORLDS.</span>
             </motion.h1>
 
             <motion.p variants={fadeInUp} className="hero-desc">
-              I'm a game developer and designer skilled in Unity, 3D art, and interactive storytelling. I create immersive worlds with Blender and Maya and build web applications with the MERN stack, all with a focus on clean UI/UX.
+              I'm a game developer and full-stack engineer, building interactive
+              worlds in Unity and clean, usable web apps with the MERN stack, from{' '}
+              <strong>Tiruvallur, Tamil Nadu.</strong>
             </motion.p>
 
             <motion.div variants={fadeInUp}>
-              <a href="#contact" className="btn-contact">
-                <span className="icon">
-                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" width="16" height="16">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                  </svg>
-                </span> Hire Me
+              <a href="mailto:thejesh1612004@gmail.com" className="btn-black paper-stack">
+                Contact Us
+                <span className="arrow">↗</span>
               </a>
             </motion.div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20, rotate: -2 }}
+            animate={{ opacity: 1, y: 0, rotate: -2 }}
+            transition={{ duration: 0.7, ease: 'easeOut', delay: 0.2 }}
+            className="stat-card paper-stack-lg"
+          >
+            <div className="stat-card-top">
+              <span className="stat-card-eyebrow">✦ MY WORK</span>
+              <span className="stat-card-pill">
+                <span className="pill-dot" /> AVAILABLE
+              </span>
+            </div>
+            <div className="stat-card-bottom">
+              <span className="stat-card-label">PROJECTS SHIPPED</span>
+              <span className="stat-card-number">3</span>
+            </div>
           </motion.div>
         </div>
       </section>
 
-      <section id="about" className="section section-secondary">
+      {/* ===== About ===== */}
+      <section id="about" className="section">
         <div className="container">
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: '-80px' }}
             variants={fadeInUp}
-            className="about-card"
+            className="about-card paper-stack"
           >
             <div className="about-img-container">
               <img src="/tj1.png" alt="THEJESH N S" />
@@ -126,68 +142,128 @@ const App = () => {
 
             <div className="about-content">
               <h2>THEJESH N S</h2>
-              <h3>Passionate Developer & Problem Solver</h3>
-
+              <h3>Passionate Developer &amp; Problem Solver</h3>
               <p>
-                I'm a passionate game developer and designer with expertise in Unity, 3D art, and interactive storytelling. My journey in game development has led me to master tools like Blender and Maya, allowing me to create immersive game worlds and stunning visual experiences.
+                I'm a passionate game developer and designer with expertise in Unity,
+                3D art, and interactive storytelling. My journey has led me to master
+                tools like Blender and Maya, creating immersive worlds and stunning
+                visual experiences.
               </p>
               <p>
-                In addition to game development, I'm skilled in building full-stack web applications using the MERN stack, along with crafting intuitive UI/UX designs. My goal is to bridge the gap between technology and user experience.
+                I'm also skilled in building full-stack web applications using the
+                MERN stack, along with crafting intuitive UI/UX designs — bridging
+                the gap between technology and user experience.
               </p>
 
-              <div className="about-skills-tags">
-                {['Unity', 'Blender', 'Maya', 'MERN Stack', '3D Modeling', 'UI/UX Design', 'Node.js', 'MongoDB'].map((skill) => (
-                  <span key={skill}>{skill}</span>
-                ))}
+              <div className="about-tags">
+                <span className="tag tag-orange">Unity</span>
+                <span className="tag tag-orange">Blender</span>
+                <span className="tag tag-orange">Maya</span>
+                <span className="tag tag-yellow">MERN Stack</span>
+                <span className="tag tag-yellow">Node.js</span>
+                <span className="tag tag-yellow">MongoDB</span>
               </div>
 
-              <div className="about-actions">
-                <a href="/resume.pdf" target="_blank" rel="noreferrer" className="btn-download">
-                  Download Resume <span>↓</span>
-                </a>
-                <a href="#contact" className="btn-collab">
-                  Let's Collaborate <span>↗</span>
-                </a>
-              </div>
+              <a href="/resume.pdf" target="_blank" rel="noreferrer" className="link-arrow">
+                download resume →
+              </a>
             </div>
           </motion.div>
         </div>
       </section>
 
-      <section id="projects" className="section">
+      {/* ===== Work: Spotlight Project ===== */}
+      <section id="work" className="section section-alt">
         <div className="container">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeInUp}
+            className="spotlight-tags"
           >
-            <h2 className="section-title">My <span>Portfolio</span></h2>
+            <span className="tag-black paper-stack">Recent Project</span>
+            <span className="tag-yellow-flag">NEW · IN DEVELOPMENT</span>
           </motion.div>
 
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="spotlight-grid"
+          >
+            <div className="spotlight-media">
+              <div className="photo-stack">
+                <img src="/game logo.png" alt="Fight to Death" />
+                <span className="photo-badge">Solo Build</span>
+              </div>
+            </div>
+
+            <div className="spotlight-content">
+              <h2>FIGHT TO DEATH</h2>
+
+              <div className="meta-row">
+                <span className="meta-label">GENRE</span>
+                <span className="meta-value">Arena Combat</span>
+              </div>
+              <div className="meta-row">
+                <span className="meta-label">BUILT WITH</span>
+                <span className="meta-value">Unity, Blender</span>
+              </div>
+
+              <p>
+                A thrilling arena combat game where criminals battle one-on-one for
+                redemption. Designed, modeled, and built solo — from 3D art in
+                Blender to full gameplay systems in Unity.
+              </p>
+
+              <div className="spotlight-stats">
+                <div className="spotlight-stat">
+                  <span className="spotlight-stat-number">1v1</span>
+                  <span className="spotlight-stat-label">Combat Format</span>
+                </div>
+                <div className="spotlight-stat">
+                  <span className="spotlight-stat-number">Solo</span>
+                  <span className="spotlight-stat-label">Built By</span>
+                </div>
+                <div className="spotlight-stat">
+                  <span className="spotlight-stat-number">2026</span>
+                  <span className="spotlight-stat-label">Year</span>
+                </div>
+              </div>
+
+              <div className="spotlight-cta">
+                <a href="/Gdd Report.pdf" target="_blank" rel="noreferrer" className="btn-black paper-stack">
+                  View Design Doc
+                </a>
+                <span className="spotlight-meta">full design document · pdf</span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Other Work */}
           <div className="projects-grid">
             <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
               variants={fadeInUp}
-              className="project-card"
+              className="project-card paper-stack"
             >
               <div className="project-img-wrapper">
-                <img src="/game logo.png" alt="FIGHT TO DEATH" className="project-img" />
+                <img src="/VR.png" alt="VR Dungeon Explore" />
               </div>
               <div className="project-content">
-                <h3>FIGHT TO DEATH</h3>
-                <p>A thrilling arena combat game where criminals battle one-on-one for redemption.</p>
+                <h3>VR Dungeon / AR iPhone</h3>
+                <p>A dual immersive experience: AR-powered 3D visualization and a VR adventure.</p>
                 <div className="project-tags">
-                  <span className="p-tag">Unity</span>
-                  <span className="p-tag">Blender</span>
+                  <span className="tag tag-orange">Unity C#</span>
+                  <span className="tag tag-orange">Blender</span>
                 </div>
-                <div>
-                  <a href="/Gdd Report.pdf" target="_blank" rel="noreferrer" className="project-link">
-                    View Details
-                  </a>
-                </div>
+                <a href="/AR VR Report 503.pdf" target="_blank" rel="noreferrer" className="link-arrow">
+                  view report →
+                </a>
               </div>
             </motion.div>
 
@@ -196,98 +272,80 @@ const App = () => {
               whileInView="visible"
               viewport={{ once: true }}
               variants={fadeInUp}
-              className="project-card"
+              className="project-card paper-stack"
             >
               <div className="project-img-wrapper">
-                <img src="/VR.png" alt="VR Dungeon Explore" className="project-img" />
-              </div>
-              <div className="project-content">
-                <h3>VR DUNGEON / AR IPHONE</h3>
-                <p>A dual immersive experience showcasing AR-powered 3D visualization and a VR adventure.</p>
-                <div className="project-tags">
-                  <span className="p-tag">Unity C#</span>
-                  <span className="p-tag">Blender</span>
-                </div>
-                <div>
-                  <a href="/AR VR Report 503.pdf" target="_blank" rel="noreferrer" className="project-link">
-                    View Details
-                  </a>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeInUp}
-              className="project-card"
-            >
-              <div className="project-img-wrapper">
-                <img src="/Home ma.png" alt="Home Maker" className="project-img" />
+                <img src="/Home ma.png" alt="Home Maker" />
               </div>
               <div className="project-content">
                 <h3>Home Maker</h3>
                 <p>A platform empowering homemakers to sell handmade products with seamless delivery.</p>
                 <div className="project-tags">
-                  <span className="p-tag">MERN</span>
-                  <span className="p-tag">React.js</span>
+                  <span className="tag tag-yellow">MERN</span>
+                  <span className="tag tag-yellow">React.js</span>
                 </div>
-                <div>
-                  <a href="/Home Maker final-1.pdf" target="_blank" rel="noreferrer" className="project-link">
-                    View Details
-                  </a>
-                </div>
+                <a href="/Home Maker final-1.pdf" target="_blank" rel="noreferrer" className="link-arrow">
+                  view case study →
+                </a>
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      <section id="experience" className="section section-secondary">
+      {/* ===== Experience: two-card layout ===== */}
+      <section id="experience" className="section">
         <div className="container">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeInUp}
-          >
-            <h2 className="section-title">My <span>Experience</span></h2>
-          </motion.div>
-
-          <div className="timeline-wrapper">
+          <div className="teaser-grid">
             <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
               variants={fadeInUp}
-              className="timeline-item"
+              className="teaser-card teaser-light paper-stack"
             >
-              <span className="timeline-date">2022 - 2023</span>
-              <h3 className="timeline-title">Electrical Maintenance</h3>
-              <h4 className="timeline-company">Izusu Motors India</h4>
-              <p className="timeline-desc">
-                I have one year experience in Electrical Maintenance and trained in PLC, GOT, Panel Wiring, VFD, and other Electrical Equipments.
+              <div className="teaser-photo-stack">
+                <img src="/tj3.png" alt="Thejesh at work" />
+              </div>
+              <h3>Electrical Maintenance</h3>
+              <span className="teaser-sub">Izusu Motors India · 2022 – 2023</span>
+              <p>
+                A year of hands-on experience in electrical maintenance, trained in
+                PLC, GOT, panel wiring, VFD, and other electrical equipment — a
+                background that shaped how I approach systems and troubleshooting today.
               </p>
+            </motion.div>
+
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeInUp}
+              className="teaser-card teaser-dark paper-stack"
+            >
+              <span className="sticky-tag">Open Now</span>
+              <span className="teaser-eyebrow">available for work!</span>
+              <h3>Ready for what's next</h3>
+              <p>
+                Game dev, 3D art, or full-stack web — if you're building something
+                and need hands-on help, I want to hear from you.
+              </p>
+              <a href="#contact" className="link-arrow link-arrow-light">let's talk →</a>
             </motion.div>
           </div>
         </div>
       </section>
 
-      <section id="contact" className="section">
+      {/* ===== Contact ===== */}
+      <section id="contact" className="section section-alt">
         <div className="container contact-container">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-          >
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}>
             <motion.h2 variants={fadeInUp} className="contact-title">
               Get In <span>Touch</span>
             </motion.h2>
 
             <motion.div variants={fadeInUp} className="contact-grid">
-              <a href="mailto:thejesh1612004@gmail.com" className="contact-card">
+              <a href="mailto:thejesh1612004@gmail.com" className="contact-card paper-stack">
                 <svg className="contact-icon" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                   <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
@@ -296,7 +354,7 @@ const App = () => {
                 <p>thejesh1612004@gmail.com</p>
               </a>
 
-              <a href="tel:+917904690293" className="contact-card">
+              <a href="tel:+917904690293" className="contact-card paper-stack">
                 <svg className="contact-icon" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                 </svg>
@@ -304,7 +362,7 @@ const App = () => {
                 <p>+91 7904690293</p>
               </a>
 
-              <div className="contact-card location">
+              <div className="contact-card paper-stack location">
                 <svg className="contact-icon" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                 </svg>
@@ -316,59 +374,15 @@ const App = () => {
         </div>
       </section>
 
+      {/* ===== Footer ===== */}
       <footer className="footer">
-        <div className="container">
-
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeInUp}
-            className="footer-social"
-          >
-            {/* ✅ FIX: <a was missing before href */}
-            <a
-              href="https://github.com/Thejesh16"
-              target="_blank"
-              rel="noreferrer"
-              className="social-link"
-              aria-label="GitHub"
-            >
-              <svg fill="currentColor" viewBox="0 0 24 24" width="22" height="22">
-                <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844a9.59 9.59 0 012.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-              </svg>
-              GitHub
-            </a>
-
-            {/* ✅ FIX: <a was missing before href */}
-            
-              <a href="https://www.linkedin.com/in/thejesh-ns-76ba2727a/"
-              target="_blank"
-              rel="noreferrer"
-              className="social-link"
-              aria-label="LinkedIn"
-            >
-              <svg fill="currentColor" viewBox="0 0 24 24" width="22" height="22">
-                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-              </svg>
-              LinkedIn
-            </a>
-          </motion.div>
-
-          <motion.a
-            href="#home"
-            className="scroll-top-btn"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeInUp}
-            aria-label="Scroll to top"
-          >
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-            </svg>
-          </motion.a>
-
+        <div className="container footer-inner">
+          <span className="footer-copy">© 2026 Thejesh N S. All rights reserved.</span>
+          <div className="footer-links">
+            <a href="https://github.com/Thejesh16" target="_blank" rel="noreferrer">GitHub</a>
+            <span className="nav-dot">·</span>
+            <a href="https://www.linkedin.com/in/thejesh-ns-76ba2727a/" target="_blank" rel="noreferrer">LinkedIn</a>
+          </div>
         </div>
       </footer>
     </>
