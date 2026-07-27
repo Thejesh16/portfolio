@@ -791,6 +791,22 @@ a {
   margin: 0;
 }
 
+.teaser-list {
+  margin: 1rem 0 0 0;
+  padding-left: 1.1rem;
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.teaser-list li {
+  margin-bottom: 0.4rem;
+}
+
+.teaser-list li::marker {
+  color: var(--orange);
+}
+
 .teaser-dark p {
   color: rgba(247, 243, 234, 0.75);
   margin-bottom: 1.5rem;

@@ -307,13 +307,17 @@ const App = () => {
               <div className="teaser-photo-stack">
                 <img src="/tj3.png" alt="Thejesh at work" />
               </div>
-              <h3>Electrical Maintenance</h3>
-              <span className="teaser-sub">Izusu Motors India · 2022 – 2023</span>
+              <h3>Full Stack Developer</h3>
+              <span className="teaser-sub">Icebergtech Private Limited · Feb 2026 – Present</span>
               <p>
-                A year of hands-on experience in electrical maintenance, trained in
-                PLC, GOT, panel wiring, VFD, and other electrical equipment — a
-                background that shaped how I approach systems and troubleshooting today.
+                Building and maintaining full-stack web applications with the MERN
+                stack — from responsive, user-friendly front-ends to the RESTful
+                APIs that power core product features.
               </p>
+              <ul className="teaser-list">
+                <li>Developing responsive front-end interfaces and RESTful APIs</li>
+                <li>Collaborating on feature design, code reviews, and deployment</li>
+              </ul>
             </motion.div>
 
             <motion.div
