@@ -120,7 +120,7 @@ const App = () => {
             </div>
             <div className="stat-card-bottom">
               <span className="stat-card-label">PROJECTS SHIPPED</span>
-              <span className="stat-card-number">3</span>
+              <span className="stat-card-number">5</span>
             </div>
           </motion.div>
         </div>
@@ -252,6 +252,29 @@ const App = () => {
               className="project-card paper-stack"
             >
               <div className="project-img-wrapper">
+                <img src="/vvr.png" alt="Quick Save" />
+              </div>
+              <div className="project-content">
+                <h3>Quick Save</h3>
+                <p>A VR-based disaster rescue and preparedness simulator that trains users to respond to emergencies through realistic, immersive scenarios.</p>
+                <div className="project-tags">
+                  <span className="tag tag-orange">Unity C#</span>
+                  <span className="tag tag-orange">VR</span>
+                </div>
+                <a href="/quick_save report.pdf" target="_blank" rel="noreferrer" className="link-arrow">
+                  view report →
+                </a>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeInUp}
+              className="project-card paper-stack"
+            >
+              <div className="project-img-wrapper">
                 <img src="/VR.png" alt="VR Dungeon Explore" />
               </div>
               <div className="project-content">
@@ -285,6 +308,29 @@ const App = () => {
                   <span className="tag tag-yellow">React.js</span>
                 </div>
                 <a href="/Home Maker final-1.pdf" target="_blank" rel="noreferrer" className="link-arrow">
+                  view case study →
+                </a>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeInUp}
+              className="project-card paper-stack"
+            >
+              <div className="project-img-wrapper">
+                <img src="/zomato-clone.png" alt="Zomato Clone" />
+              </div>
+              <div className="project-content">
+                <h3>Zomato Clone</h3>
+                <p>A food delivery web app replicating Zomato's core ordering and restaurant-browsing experience, built end-to-end with the MERN stack.</p>
+                <div className="project-tags">
+                  <span className="tag tag-yellow">MERN</span>
+                  <span className="tag tag-yellow">React.js</span>
+                </div>
+                <a href="/Zomato Clone Report.pdf" target="_blank" rel="noreferrer" className="link-arrow">
                   view case study →
                 </a>
               </div>
