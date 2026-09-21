@@ -2,7 +2,35 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import './App.css';
 
-const NAV_ITEMS = ['Home', 'About', 'Work', 'Experience', 'Contact'];
+const NAV_ITEMS = ['Home', 'About', 'Work', '3D', 'Experience', 'Contact'];
+
+const RENDERS = [
+  {
+    img: '/laptop4.png',
+    title: 'Anime Wallpaper Laptop Mockup',
+    tags: ['Blender', 'Product Viz'],
+  },
+  {
+    img: '/ramanshop.png',
+    title: 'Zyren — Ramen Shop',
+    tags: ['Blender', 'Isometric', 'Low-poly'],
+  },
+  {
+    img: '/cybermall.png',
+    title: 'Cybermall',
+    tags: ['Blender', 'Cyberpunk', 'Architecture'],
+  },
+  {
+    img: '/cyberstore.png',
+    title: '24x7 Stuff Store',
+    tags: ['Blender', 'Sci-fi', 'Retail'],
+  },
+  {
+    img: '/well.png',
+    title: 'Rustic Well',
+    tags: ['Blender', 'Low-poly', 'Prop'],
+  },
+];
 
 const App = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -339,8 +367,62 @@ const App = () => {
         </div>
       </section>
 
+      {/* ===== 3D Modeling: Diorama Gallery ===== */}
+      <section id="3d" className="section">
+        <div className="container">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="spotlight-tags"
+          >
+            <span className="tag-black paper-stack">3D Modeling</span>
+            <span className="tag-yellow-flag">BLENDER · RENDERS</span>
+          </motion.div>
+
+          <motion.p
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="diorama-intro"
+          >
+            A collection of low-poly and stylized isometric scenes — modeled,
+            textured, and lit in Blender.
+          </motion.p>
+
+          <div className="diorama-grid">
+            {RENDERS.map((render, i) => (
+              <motion.div
+                key={render.title}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeInUp}
+                className="diorama-card paper-stack"
+              >
+                <div className={`diorama-image-wrap ${i % 2 === 0 ? 'tilt-left' : 'tilt-right'}`}>
+                  <img src={render.img} alt={render.title} />
+                </div>
+                <div className="diorama-content">
+                  <h3>{render.title}</h3>
+                  <div className="diorama-tags">
+                    {render.tags.map((tag, ti) => (
+                      <span key={tag} className={`tag ${ti % 2 === 0 ? 'tag-orange' : 'tag-yellow'}`}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ===== Experience: two-card layout ===== */}
-      <section id="experience" className="section">
+      <section id="experience" className="section section-alt">
         <div className="container">
           <div className="teaser-grid">
             <motion.div

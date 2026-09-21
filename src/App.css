@@ -730,6 +730,81 @@ a {
   margin-top: auto;
 }
 
+/* ===== 3D Modeling: Diorama Gallery ===== */
+.diorama-intro {
+  color: var(--ink-soft);
+  font-size: 1rem;
+  line-height: 1.7;
+  max-width: 560px;
+  margin: -1.25rem 0 2.75rem 0;
+}
+
+.diorama-grid {
+  columns: 2;
+  column-gap: 2.5rem;
+}
+
+.diorama-card {
+  break-inside: avoid;
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 2.5rem;
+  background-color: var(--white);
+  border: 2.5px solid var(--ink);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.diorama-image-wrap {
+  overflow: hidden;
+  border-bottom: 2px solid var(--ink);
+  background-color: var(--ink);
+}
+
+.diorama-image-wrap img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  transform: scale(1.02);
+  transition: transform 0.35s ease;
+}
+
+.diorama-card:hover .diorama-image-wrap img {
+  transform: scale(1.08) rotate(0.5deg);
+}
+
+.diorama-image-wrap.tilt-left img {
+  transform-origin: 40% 60%;
+}
+
+.diorama-image-wrap.tilt-right img {
+  transform-origin: 60% 40%;
+}
+
+.diorama-content {
+  padding: 1.5rem;
+}
+
+.diorama-content h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0 0 0.85rem 0;
+  color: var(--ink);
+}
+
+.diorama-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .diorama-grid {
+    columns: 1;
+  }
+}
+
 /* ===== Experience two-card layout ===== */
 .teaser-grid {
   display: grid;
