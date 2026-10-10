@@ -4,6 +4,7 @@ import './App.css';
 
 const NAV_ITEMS = ['Home', 'About', 'Work', '3D', 'Experience', 'Contact'];
 
+
 const RENDERS = [
   {
     img: '/laptop4.png',
@@ -35,9 +36,30 @@ const RENDERS = [
 const App = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 40);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 40);
+
+      const offset = window.scrollY + 150;
+      let current = 'home';
+
+      NAV_ITEMS.forEach((item) => {
+        const id = item.toLowerCase();
+        const el = document.getElementById(id);
+        if (el && el.offsetTop <= offset) current = id;
+      });
+
+      // Contact section is short, so highlight it when you reach the bottom
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 2) {
+        current = 'contact';
+      }
+
+      setActiveSection(current);
+    };
+
+    handleScroll();
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -71,14 +93,21 @@ const App = () => {
           </a>
 
           <nav className="desktop-nav">
-            {NAV_ITEMS.map((item, i) => (
-              <React.Fragment key={item}>
-                <a href={`#${item.toLowerCase()}`} className={i === 0 ? 'active' : ''}>
-                  {item}
-                </a>
-                {i < NAV_ITEMS.length - 1 && <span className="nav-dot">·</span>}
-              </React.Fragment>
-            ))}
+            {NAV_ITEMS.map((item, i) => {
+              const id = item.toLowerCase();
+              return (
+                <React.Fragment key={item}>
+                  <a
+                    href={`#${id}`}
+                    className={activeSection === id ? 'active' : ''}
+                    onClick={() => setActiveSection(id)}
+                  >
+                    {item}
+                  </a>
+                  {i < NAV_ITEMS.length - 1 && <span className="nav-dot">·</span>}
+                </React.Fragment>
+              );
+            })}
           </nav>
 
           <a href="mailto:thejesh1612004@gmail.com" className="nav-contact paper-stack">
@@ -100,11 +129,22 @@ const App = () => {
             animate={{ opacity: 1, height: 'auto' }}
             className="mobile-nav"
           >
-            {NAV_ITEMS.map((item) => (
-              <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setIsMobileMenuOpen(false)}>
-                {item}
-              </a>
-            ))}
+            {NAV_ITEMS.map((item) => {
+              const id = item.toLowerCase();
+              return (
+                <a
+                  key={item}
+                  href={`#${id}`}
+                  className={activeSection === id ? 'active' : ''}
+                  onClick={() => {
+                    setActiveSection(id);
+                    setIsMobileMenuOpen(false);
+                  }}
+                >
+                  {item}
+                </a>
+              );
+            })}
           </motion.nav>
         )}
       </header>
@@ -421,52 +461,81 @@ const App = () => {
         </div>
       </section>
 
-      {/* ===== Experience: two-card layout ===== */}
-      <section id="experience" className="section section-alt">
-        <div className="container">
-          <div className="teaser-grid">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeInUp}
-              className="teaser-card teaser-light paper-stack"
-            >
-              <div className="teaser-photo-stack">
-                <img src="/tj3.png" alt="Thejesh at work" />
-              </div>
-              <h3>Full Stack Developer</h3>
-              <span className="teaser-sub">Icebergtech Private Limited · Feb 2026 – Present</span>
-              <p>
-                Building and maintaining full-stack web applications with the MERN
-                stack — from responsive, user-friendly front-ends to the RESTful
-                APIs that power core product features.
-              </p>
-              <ul className="teaser-list">
-                <li>Developing responsive front-end interfaces and RESTful APIs</li>
-                <li>Collaborating on feature design, code reviews, and deployment</li>
-              </ul>
-            </motion.div>
-
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeInUp}
-              className="teaser-card teaser-dark paper-stack"
-            >
-              <span className="sticky-tag">Open Now</span>
-              <span className="teaser-eyebrow">available for work!</span>
-              <h3>Ready for what's next</h3>
-              <p>
-                Game dev, 3D art, or full-stack web — if you're building something
-                and need hands-on help, I want to hear from you.
-              </p>
-              <a href="#contact" className="link-arrow link-arrow-light">let's talk →</a>
-            </motion.div>
-          </div>
+      {/* ===== Experience: cards ===== */}
+<section id="experience" className="section section-alt">
+  <div className="container">
+    <div className="teaser-grid">
+      {/* Full Stack Developer */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={fadeInUp}
+        className="teaser-card teaser-light paper-stack"
+      >
+        <div className="teaser-photo-stack">
+          <img src="/tj3.png" alt="Thejesh at work" />
         </div>
-      </section>
+        <h3>Full Stack Developer</h3>
+        <span className="teaser-sub">Icebergtech Private Limited · Feb 2026 – Present</span>
+        <p>
+          Building and maintaining full-stack web applications with the MERN
+          stack — from responsive, user-friendly front-ends to the RESTful
+          APIs that power core product features.
+        </p>
+        <ul className="teaser-list">
+          <li>Developing responsive front-end interfaces and RESTful APIs</li>
+          <li>Collaborating on feature design, code reviews, and deployment</li>
+        </ul>
+      </motion.div>
+
+      {/* Sakthi Auto Internship */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={fadeInUp}
+        className="teaser-card teaser-light paper-stack"
+      >
+        <div className="teaser-icon">🎬</div>
+        <h3>3D Animation &amp; Multimedia Intern</h3>
+        <span className="teaser-sub">Sakthi Auto Component Limited · 17 Apr – 30 May 2025</span>
+        <p>
+          Created customised 3D models and animated process videos with
+          realistic movements and gestures for the company's internal
+          learning portal.
+        </p>
+        <ul className="teaser-list">
+          <li>Modeled and animated 3D assets to explain real manufacturing processes</li>
+          <li>Integrated professional voice-over narration and post-production</li>
+        </ul>
+        <div className="teaser-tags">
+          <span className="tag tag-orange">3D Modeling</span>
+          <span className="tag tag-orange">Animation</span>
+          <span className="tag tag-yellow">Post-production</span>
+        </div>
+      </motion.div>
+
+      {/* Open Now (full width) */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={fadeInUp}
+        className="teaser-card teaser-dark teaser-wide paper-stack"
+      >
+        <span className="sticky-tag">Open Now</span>
+        <span className="teaser-eyebrow">available for work!</span>
+        <h3>Ready for what's next</h3>
+        <p>
+          Game dev, 3D art, or full-stack web — if you're building something
+          and need hands-on help, I want to hear from you.
+        </p>
+        <a href="#contact" className="link-arrow link-arrow-light">let's talk →</a>
+      </motion.div>
+    </div>
+  </div>
+</section>
 
       {/* ===== Contact ===== */}
       <section id="contact" className="section section-alt">

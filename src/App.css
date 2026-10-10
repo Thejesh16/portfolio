@@ -233,7 +233,15 @@ a {
   font-weight: 600;
 }
 
-.mobile-nav a:hover {
+html {
+  scroll-behavior: smooth;
+}
+
+section[id] {
+  scroll-margin-top: 80px;
+}
+
+.mobile-nav a.active {
   color: var(--orange);
 }
 
@@ -909,6 +917,30 @@ a {
   font-weight: 600;
   font-size: 0.85rem;
   margin-bottom: 0.75rem;
+}
+
+.teaser-wide {
+  grid-column: 1 / -1;
+}
+
+.teaser-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  background-color: var(--yellow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  margin-bottom: 1.5rem;
+}
+
+.teaser-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
 }
 
 /* ===== Contact ===== */
